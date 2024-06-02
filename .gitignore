@@ -42,3 +42,15 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 pubspec.yaml
+
+# Python-related
+.env
+.venv
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller
+*.manifest
+*.spec
