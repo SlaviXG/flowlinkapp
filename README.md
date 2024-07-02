@@ -19,3 +19,15 @@ samples, guidance on mobile development, and a full API reference.
 ```bash
     pyinstaller --onefile --hidden-import pynput.keyboard.hotkey --hidden-import pynput.keyboard.listener lib/hotkey_listener.py
 ```
+
+## Build & run
+1. In the main directory, create `api_keys.json` file.
+```
+{
+    "GEMINI_KEY": "PASTE THE API KEY"
+}
+```
+2. Run
+```bash
+    flutter run --dart-define-from-file=api_keys.json -d windows
+```

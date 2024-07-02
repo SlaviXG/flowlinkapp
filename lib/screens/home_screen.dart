@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:path/path.dart' as path;
 import 'package:flowlinkapp/services/api_service.dart';
 
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -21,12 +22,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeApiService();
+    _initializeApiService(const String.fromEnvironment('GEMINI_KEY'));
   }
 
-  void _initializeApiService() {
+  void _initializeApiService(String apiKey) {
     try {
-      _apiService = ApiService();
+      _apiService = ApiService(apiKey);
     } catch (e) {
       setState(() {
         _responseText = 'Failed to initialize API service: $e';

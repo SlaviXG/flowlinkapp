@@ -54,3 +54,6 @@ __pycache__/
 # PyInstaller
 *.manifest
 *.spec
+
+#API
+api_keys.json
