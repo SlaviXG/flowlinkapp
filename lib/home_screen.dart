@@ -2,32 +2,38 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path/path.dart' as path;
-import 'package:flowlinkapp/services/api_service.dart';
+import 'package:flowlinkapp/services/gemini_service.dart';
 
 
 class HomeScreen extends StatefulWidget {
+  final Map<String, dynamic> config;
+
+  HomeScreen({required this.config});
+  
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final Map<String, dynamic> config;
   String _output = '';
   Socket? _socket;
   Process? _pythonProcess;
   final TextEditingController _controller = TextEditingController();
   String? _responseText;
   bool _isLoading = false;
-  late ApiService _apiService;
-
+  late GeminiService _geminiService;
+  
   @override
   void initState() {
     super.initState();
-    _initializeApiService(const String.fromEnvironment('GEMINI_KEY'));
+    print(widget.config['system_prompt']);
+    _initializeGeminiApiService(const String.fromEnvironment('GEMINI_KEY'), widget.config['system_prompt']);
   }
 
-  void _initializeApiService(String apiKey) {
+  void _initializeGeminiApiService(String apiKey, String systemPrompt) {
     try {
-      _apiService = ApiService(apiKey);
+      _geminiService = GeminiService(apiKey, systemPrompt);
     } catch (e) {
       setState(() {
         _responseText = 'Failed to initialize API service: $e';
@@ -101,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _generateContent() async {
-    if (_apiService == null) {
+    if (_geminiService == null) {
       setState(() {
         _responseText = 'API service not initialized';
       });
@@ -113,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final responseText = await _apiService.generateContent(_controller.text);
+      final responseText = await _geminiService.generateContent(_controller.text);
       setState(() {
         _responseText = responseText;
         _isLoading = false;

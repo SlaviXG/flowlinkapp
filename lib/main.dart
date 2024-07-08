@@ -1,12 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flowlinkapp/screens/home_screen.dart';
+import 'package:flowlinkapp/home_screen.dart';
+import 'dart:convert';
+import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  Map<String, dynamic> config = await loadConfig();
+  runApp(MyApp(config: config));
 }
 
+Future<Map<String, dynamic>> loadConfig() async {
+  String configContent = await File('config.json').readAsString();
+  return json.decode(configContent);
+}
+
+
 class MyApp extends StatelessWidget {
+  final Map<String, dynamic> config;
+
+  MyApp({required this.config});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -14,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomeScreen(),
+      home: HomeScreen(config: config),
     );
   }
 }
