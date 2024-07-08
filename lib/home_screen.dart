@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    print(widget.config['system_prompt']);
     _initializeGeminiApiService(const String.fromEnvironment('GEMINI_KEY'), widget.config['system_prompt']);
   }
 
