@@ -5,9 +5,9 @@ class EventHandler extends Handler {
   void handle(Map<String, dynamic> response) {
     if(response.containsKey('event')) {
 
-      // TODO:
-      print("Processing event!");
-      
+      //TODO:
+      print("Sending event to Google Calendar!");
+
     } else {
       super.handle(response);
     }
