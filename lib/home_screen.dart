@@ -110,11 +110,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final responseText = await _dataProcessor.extract(_controller.text);
+      final response = await _dataProcessor.extract(_controller.text);
       setState(() {
-        _responseText = responseText.toString();
+        _responseText = response.toString();
         _isLoading = false;
       });
+      _dataProcessor.submit(response);
     } catch (e) {
       setState(() {
         _responseText = 'Error: $e';
