@@ -1,3 +1,4 @@
+import 'package:flowlinkapp/models/data_processor.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -15,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final Map<String, dynamic> config;
+  late final DataProcessor _dataProcessor;
   String _output = '';
   Socket? _socket;
   Process? _pythonProcess;
@@ -27,17 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeGeminiService(const String.fromEnvironment('GEMINI_KEY'), widget.config['system_prompt']);
-  }
-
-  void _initializeGeminiService(String apiKey, String systemPrompt) {
-    try {
-      _geminiService = GeminiService(apiKey, systemPrompt);
-    } catch (e) {
-      setState(() {
-        _responseText = 'Failed to initialize API service: $e';
-      });
-    }
+    widget.config['processing_config']['gemini_api_key'] = const String.fromEnvironment('GEMINI_KEY');
+    _dataProcessor = DataProcessor(widget.config['processing_config']);
   }
 
   @override
@@ -105,8 +97,8 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _generateContent() async {
-    if (_geminiService == null) {
+  void _processContent() async {
+    if (_dataProcessor == null) {
       setState(() {
         _responseText = 'API service not initialized';
       });
@@ -118,9 +110,9 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     try {
-      final responseText = await _geminiService.generateContent(_controller.text);
+      final responseText = await _dataProcessor.extract(_controller.text);
       setState(() {
-        _responseText = responseText;
+        _responseText = responseText.toString();
         _isLoading = false;
       });
     } catch (e) {
@@ -150,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _isLoading ? null : _generateContent,
+              onPressed: _isLoading ? null : _processContent,
               child: _isLoading ? CircularProgressIndicator() : Text('Send'),
             ),
             SizedBox(height: 20),
