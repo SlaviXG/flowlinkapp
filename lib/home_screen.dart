@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path/path.dart' as path;
-import 'package:flowlinkapp/services/gemini_service.dart';
-
+import 'package:flowlinkapp/services/google_auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final Map<String, dynamic> config;
@@ -23,8 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
   String? _responseText;
   bool _isLoading = false;
-  late GeminiService _geminiService;
-  
+  final GoogleAuthService _googleAuthService = GoogleAuthService();
+
   @override
   void initState() {
     super.initState();
@@ -124,6 +123,50 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  void _loginWithGoogle() async {
+    try {
+      await _googleAuthService.getAuthenticatedClient();
+      setState(() {
+        _output += 'Successfully authenticated with Google.\n';
+      });
+    } catch (e) {
+      setState(() {
+        _output += 'Failed to authenticate with Google: $e\n';
+      });
+    }
+  }
+
+  void _createTask() async {
+    try {
+      var task = await _googleAuthService.createTask('Sample Task', 'This is a sample task');
+      setState(() {
+        _output += 'Created Task: ${task.title}\n';
+      });
+    } catch (e) {
+      setState(() {
+        _output += 'Failed to create task: $e\n';
+      });
+    }
+  }
+
+  void _createCalendarEvent() async {
+    try {
+      var event = await _googleAuthService.createCalendarEvent(
+        'Sample Event',
+        'This is a sample event',
+        DateTime.now(),
+        DateTime.now().add(Duration(hours: 1)),
+      );
+      setState(() {
+        _output += 'Created Event: ${event.summary}\n';
+      });
+    } catch (e) {
+      setState(() {
+        _output += 'Failed to create event: $e\n';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,6 +200,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: _startServerAndConnect,
               child: Text('Connect to Server'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _loginWithGoogle,
+              child: Text('Login with Google'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _createTask,
+              child: Text('Create Task'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _createCalendarEvent,
+              child: Text('Create Calendar Event'),
             ),
             SizedBox(height: 20),
             Expanded(
