@@ -14,7 +14,7 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Build & run
 1. In the main directory, create `auth.json` file.
-2. Pase the following content and provide your gemini api key, google cloud client id and secret.
+2. Pase the following content and provide your gemini api key, google cloud client id, project id and secret.
 ```
 {
     {   
@@ -25,7 +25,7 @@ samples, guidance on mobile development, and a full API reference.
             },
             "flowlink": {
                 "client_id":"YOUR CLIENT ID",
-                "project_id":"flowlinkapp",
+                "project_id":"YOUR PROJECT ID",
                 "auth_uri":"https://accounts.google.com/o/oauth2/auth",
                 "token_uri":"https://oauth2.googleapis.com/token",
                 "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
