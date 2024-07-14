@@ -52,14 +52,26 @@ class GoogleAuthService {
     );
   }
 
+  Future<String> _getDefaultTaskListId(TasksApi tasksApi) async {
+    var taskLists = await tasksApi.tasklists.list();
+    if (taskLists.items != null && taskLists.items!.isNotEmpty) {
+      return taskLists.items!.first.id!;
+    } else {
+      throw Exception('No task lists found');
+    }
+  }
+
   Future<Task> createTask(String title, String notes) async {
     var client = await getAuthenticatedClient();
     var tasksApi = TasksApi(client);
+
+    var taskListId = await _getDefaultTaskListId(tasksApi);
+
     var task = Task()
       ..title = title
       ..notes = notes;
 
-    return await tasksApi.tasks.insert(task, 'default');
+    return await tasksApi.tasks.insert(task, taskListId);
   }
 
   Future<Event> createCalendarEvent(String summary, String description, DateTime start, DateTime end) async {

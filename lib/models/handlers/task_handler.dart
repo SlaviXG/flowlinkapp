@@ -1,20 +1,18 @@
 import 'package:flowlinkapp/services/google_auth_service.dart';
 import 'abstract_handler.dart';
 
-class EventHandler extends Handler {
+class TaskHandler extends Handler {
   late GoogleAuthService _googleAuthService;
 
-  EventHandler(GoogleAuthService googleAuthService) {
+  TaskHandler (GoogleAuthService googleAuthService) {
     _googleAuthService = googleAuthService;
   }
 
   @override
   void handle(Map<String, dynamic> response) {
-    if(response.containsKey('event')) {
-
-      //TODO:
-      print("Sending event to Google Calendar!");
-
+    if(response.containsKey('note')) {
+      print("Sending the event to Google Tasks!");
+      _googleAuthService.createTask(response['note'], response['content']);
     } else {
       super.handle(response);
     }

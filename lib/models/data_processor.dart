@@ -1,5 +1,5 @@
 import 'package:flowlinkapp/models/handlers/event_handler.dart';
-import 'package:flowlinkapp/models/handlers/note_handler.dart';
+import 'package:flowlinkapp/models/handlers/task_handler.dart';
 import 'package:flowlinkapp/services/google_auth_service.dart';
 import 'package:flowlinkapp/services/gemini_service.dart';
 import 'dart:convert';
@@ -9,15 +9,15 @@ class DataProcessor {
   late GoogleAuthService _googleAuthService;
   late GeminiService _geminiService;
   late EventHandler _eventHandler;
-  late NoteHandler _noteHandler;
+  late TaskHandler _taskHandler;
 
   DataProcessor(Map <String, dynamic> config) {
     _config = config;
     _geminiService = GeminiService(_config['services']['gemini']['api_key'], _config['services']['gemini']['system_prompt']);
     _googleAuthService = GoogleAuthService(_config['services']['flowlink']['client_id'], _config['services']['flowlink']['client_secret'], _config['services']['flowlink']['scopes']);
-    _eventHandler = EventHandler();
-    _noteHandler = NoteHandler();
-    _eventHandler.setNext(_noteHandler);
+    _eventHandler = EventHandler(_googleAuthService);
+    _taskHandler = TaskHandler(_googleAuthService);
+    _eventHandler.setNext(_taskHandler);
   }
 
   Future<Map <String, dynamic>> extract(String textForExtraction) async {
