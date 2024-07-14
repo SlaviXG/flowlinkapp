@@ -55,5 +55,5 @@ __pycache__/
 *.manifest
 *.spec
 
-#API
-api_keys.json
+#Auth.
+auth.json

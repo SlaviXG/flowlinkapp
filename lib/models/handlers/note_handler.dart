@@ -6,7 +6,7 @@ class NoteHandler extends Handler {
     if(response.containsKey('note')) {
       
       //TODO:
-      print("Sending event to Google Keep!");
+      print("Sending event to Google Tasks!");
       
     } else {
       super.handle(response);

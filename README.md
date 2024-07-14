@@ -13,13 +13,32 @@ samples, guidance on mobile development, and a full API reference.
 ```
 
 ## Build & run
-1. In the main directory, create `api_keys.json` file.
+1. In the main directory, create `auth.json` file.
+2. Pase the following content and provide your gemini api key, google cloud client id and secret.
 ```
 {
-    "GEMINI_KEY": "PASTE THE API KEY"
+    {   
+    "data_processor": {
+        "services": {
+            "gemini": {
+                "api_key": "YOUR GEMINI API KEY"
+            },
+            "flowlink": {
+                "client_id":"YOUR CLIENT ID",
+                "project_id":"flowlinkapp",
+                "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+                "token_uri":"https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+                "client_secret":"YOUR CLIENT SECRET",
+                "redirect_uris":["http://localhost"]
+            }
+        }
+    }
+}
 }
 ```
+
 2. Run
 ```bash
-    flutter run --dart-define-from-file=api_keys.json -d windows
+    flutter run -d windows
 ```

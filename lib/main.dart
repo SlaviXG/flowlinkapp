@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flowlinkapp/home_screen.dart';
+import 'package:flowlinkapp/utils/data.dart';
 import 'dart:convert';
 import 'dart:io';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Map<String, dynamic> config = await loadConfig();
+  Map<String, dynamic> mainConfig = await loadConfig('config.json');
+  Map<String, dynamic> authConfig = await loadConfig('auth.json');
+  Map<String, dynamic> config = mergeMaps(mainConfig, authConfig);
   runApp(MyApp(config: config));
 }
 
-Future<Map<String, dynamic>> loadConfig() async {
-  String configContent = await File('config.json').readAsString();
+Future<Map<String, dynamic>> loadConfig(String configPath) async {
+  String configContent = await File(configPath).readAsString();
   return json.decode(configContent);
 }
 

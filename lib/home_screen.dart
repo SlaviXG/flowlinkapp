@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:path/path.dart' as path;
-import 'package:flowlinkapp/services/google_auth_service.dart';
+
 
 class HomeScreen extends StatefulWidget {
   final Map<String, dynamic> config;
@@ -22,13 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controller = TextEditingController();
   String? _responseText;
   bool _isLoading = false;
-  final GoogleAuthService _googleAuthService = GoogleAuthService();
 
   @override
   void initState() {
     super.initState();
-    widget.config['processing_config']['gemini_api_key'] = const String.fromEnvironment('GEMINI_KEY');
-    _dataProcessor = DataProcessor(widget.config['processing_config']);
+    _dataProcessor = DataProcessor(widget.config['data_processor']);
   }
 
   @override
@@ -125,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loginWithGoogle() async {
     try {
-      await _googleAuthService.getAuthenticatedClient();
+      await _dataProcessor.getGoogleAuthService().getAuthenticatedClient();
       setState(() {
         _output += 'Successfully authenticated with Google.\n';
       });
@@ -138,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _createTask() async {
     try {
-      var task = await _googleAuthService.createTask('Sample Task', 'This is a sample task');
+      var task = await _dataProcessor.getGoogleAuthService().createTask('Sample Task', 'This is a sample task');
       setState(() {
         _output += 'Created Task: ${task.title}\n';
       });
@@ -151,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _createCalendarEvent() async {
     try {
-      var event = await _googleAuthService.createCalendarEvent(
+      var event = await _dataProcessor.getGoogleAuthService().createCalendarEvent(
         'Sample Event',
         'This is a sample event',
         DateTime.now(),

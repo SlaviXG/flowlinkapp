@@ -7,12 +7,14 @@ import 'dart:convert';
 
 
 class GoogleAuthService {
-  final _storage = FlutterSecureStorage();
-  final _clientId = ClientId('CLIENT_ID', 'CLIENT_SECRET');
-  final _scopes = [
-    'https://www.googleapis.com/auth/tasks',
-    'https://www.googleapis.com/auth/calendar'
-  ];
+  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  late final ClientId _clientId;
+  late final List <String> _scopes;
+
+  GoogleAuthService(String clientId, String clientSecret, List<dynamic> scopes) {
+    _clientId = ClientId(clientId, clientSecret);
+    _scopes = scopes.map((e) => e.toString()).toList();
+  }
 
   Future<AuthClient> getAuthenticatedClient() async {
     var credentials = await _getStoredCredentials();
