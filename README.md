@@ -10,6 +10,7 @@ FlowLink is an application that harnesses the power of Gemini, Google Tasks, and
 ### Windows
 ### Linux
 - `keybinder-3.0`
+
 Run the following command:
 ```shell sudo apt-get install keybinder-3.0```
 
