@@ -5,11 +5,10 @@ import 'package:googleapis/tasks/v1.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'dart:convert';
 
-
 class GoogleAuthService {
   final FlutterSecureStorage _storage = FlutterSecureStorage();
   late final ClientId _clientId;
-  late final List <String> _scopes;
+  late final List<String> _scopes;
 
   GoogleAuthService(String clientId, String clientSecret, List<dynamic> scopes) {
     _clientId = ClientId(clientId, clientSecret);
@@ -61,20 +60,34 @@ class GoogleAuthService {
     }
   }
 
-  Future<Task> createTask(String title, String notes) async {
+  Future<Task> createTask(String title, {String? notes, String? dueDate}) async {
     var client = await getAuthenticatedClient();
     var tasksApi = TasksApi(client);
-
     var taskListId = await _getDefaultTaskListId(tasksApi);
 
     var task = Task()
-      ..title = title
-      ..notes = notes;
+      ..title = title;
+
+    if (notes != null) {
+      task.notes = notes;
+    }
+    
+    if (dueDate != null) {
+      task.due = dueDate;
+    }
 
     return await tasksApi.tasks.insert(task, taskListId);
   }
 
-  Future<Event> createCalendarEvent(String summary, String description, DateTime start, DateTime end) async {
+  Future<Event> createCalendarEvent({
+    required String summary, 
+    required String description, 
+    required DateTime start, 
+    required DateTime end, 
+    String? location, 
+    List<EventAttendee>? attendees, 
+    String timeZone = 'America/Los_Angeles'}) async {
+
     var client = await getAuthenticatedClient();
     var calendarApi = CalendarApi(client);
 
@@ -83,10 +96,18 @@ class GoogleAuthService {
       ..description = description
       ..start = (EventDateTime()
         ..dateTime = start
-        ..timeZone = 'America/Los_Angeles')
+        ..timeZone = timeZone)
       ..end = (EventDateTime()
         ..dateTime = end
-        ..timeZone = 'America/Los_Angeles');
+        ..timeZone = timeZone);
+
+    if (location != null) {
+      event.location = location;
+    }
+
+    if (attendees != null && attendees.isNotEmpty) {
+      event.attendees = attendees;
+    }
 
     return await calendarApi.events.insert(event, 'primary');
   }

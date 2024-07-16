@@ -10,9 +10,15 @@ class TaskHandler extends Handler {
 
   @override
   void handle(Map<String, dynamic> response) {
-    if(response.containsKey('note')) {
-      print("Sending the event to Google Tasks!");
-      _googleAuthService.createTask(response['note'], response['content']);
+    if(response.containsKey('task')) {
+      response = response['task'];
+      print(response);
+      print(response['notes']=="null");
+      print(response['notes']==null);
+      _googleAuthService.createTask(
+        response['title'],
+        notes: ((response['notes']!=null) ? (response['notes']) : (null)),
+        dueDate: ((response['due_date']!=null) ? (response['due_date']) : (null)));
     } else {
       super.handle(response);
     }

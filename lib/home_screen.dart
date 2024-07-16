@@ -136,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _createTask() async {
     try {
-      var task = await _dataProcessor.getGoogleAuthService().createTask('Sample Task', 'This is a sample task');
+      var task = await _dataProcessor.getGoogleAuthService().createTask('Sample Task', notes: 'This is a sample task');
       setState(() {
         _output += 'Created Task: ${task.title}\n';
       });
@@ -150,10 +150,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void _createCalendarEvent() async {
     try {
       var event = await _dataProcessor.getGoogleAuthService().createCalendarEvent(
-        'Sample Event',
-        'This is a sample event',
-        DateTime.now(),
-        DateTime.now().add(Duration(hours: 1)),
+        summary: 'Sample Event',
+        description: 'This is a sample event',
+        start: DateTime.now(),
+        end: DateTime.now().add(Duration(hours: 1)),
       );
       setState(() {
         _output += 'Created Event: ${event.summary}\n';

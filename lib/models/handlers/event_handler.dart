@@ -11,10 +11,7 @@ class EventHandler extends Handler {
   @override
   void handle(Map<String, dynamic> response) {
     if(response.containsKey('event')) {
-
-      //TODO:
-      print("Sending event to Google Calendar!");
-
+      //TODO
     } else {
       super.handle(response);
     }

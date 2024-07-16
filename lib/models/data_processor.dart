@@ -32,6 +32,7 @@ class DataProcessor {
   }
 
   void submit(Map<String, dynamic> data) {
+    // Start the chain
     _eventHandler.handle(data);
   }
 
