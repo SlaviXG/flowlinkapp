@@ -21,9 +21,11 @@ class DataProcessor {
   }
 
   Future<Map <String, dynamic>> extract(String textForExtraction) async {
-    final String responseText = await _geminiService.generateContent(textForExtraction);
+    String responseText = await _geminiService.generateContent(textForExtraction);
     Map <String, dynamic> response = Map();
     try {
+      final RegExp regex = RegExp(r'^```json|```$');
+      responseText = responseText.replaceAll(regex, '').trim();
       response = json.decode(responseText);
     } catch (e) {
       print('Failed to decode JSON: $e');

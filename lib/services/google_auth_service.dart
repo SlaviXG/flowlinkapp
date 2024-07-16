@@ -85,7 +85,7 @@ class GoogleAuthService {
     required DateTime start, 
     required DateTime end, 
     String? location, 
-    List<EventAttendee>? attendees, 
+    List<String>? attendees, 
     String timeZone = 'America/Los_Angeles'}) async {
 
     var client = await getAuthenticatedClient();
@@ -106,7 +106,7 @@ class GoogleAuthService {
     }
 
     if (attendees != null && attendees.isNotEmpty) {
-      event.attendees = attendees;
+      event.attendees = attendees.map((email) => EventAttendee(email: email)).toList();
     }
 
     return await calendarApi.events.insert(event, 'primary');

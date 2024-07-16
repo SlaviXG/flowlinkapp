@@ -134,37 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _createTask() async {
-    try {
-      var task = await _dataProcessor.getGoogleAuthService().createTask('Sample Task', notes: 'This is a sample task');
-      setState(() {
-        _output += 'Created Task: ${task.title}\n';
-      });
-    } catch (e) {
-      setState(() {
-        _output += 'Failed to create task: $e\n';
-      });
-    }
-  }
-
-  void _createCalendarEvent() async {
-    try {
-      var event = await _dataProcessor.getGoogleAuthService().createCalendarEvent(
-        summary: 'Sample Event',
-        description: 'This is a sample event',
-        start: DateTime.now(),
-        end: DateTime.now().add(Duration(hours: 1)),
-      );
-      setState(() {
-        _output += 'Created Event: ${event.summary}\n';
-      });
-    } catch (e) {
-      setState(() {
-        _output += 'Failed to create event: $e\n';
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -203,16 +172,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
               onPressed: _loginWithGoogle,
               child: Text('Login with Google'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _createTask,
-              child: Text('Create Task'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _createCalendarEvent,
-              child: Text('Create Calendar Event'),
             ),
             SizedBox(height: 20),
             Expanded(
