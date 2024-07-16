@@ -12,7 +12,8 @@
             }
         }
     },
-    "ui": {
+    "data_retriever": {
+        "capture_hotkey": "Alt+Q",
         "capture_images": false
     }
 }

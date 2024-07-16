@@ -33,7 +33,7 @@ class DataProcessor {
     return response;
   }
 
-  void submit(Map<String, dynamic> data) {
+  Future <void> submit(Map<String, dynamic> data) async {
     // Start the chain
     _eventHandler.handle(data);
   }

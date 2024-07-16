@@ -26,12 +26,7 @@ Future<void> main() async {
     keyDownHandler: (hotKey) {
       print('onKeyDown+${hotKey.toJson()}');
     },
-    // Only works on macOS.
-    keyUpHandler: (hotKey){
-      print('onKeyUp+${hotKey.toJson()}');
-    } ,
   );
-
   // await hotKeyManager.unregister(_hotKey);
   // await hotKeyManager.unregisterAll();
 
