@@ -3,9 +3,7 @@ import 'package:flowlinkapp/home_screen.dart';
 import 'package:flowlinkapp/utils/data.dart';
 import 'dart:convert';
 import 'dart:io';
-import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:flutter/services.dart';
 
 
 Future<void> main() async {
@@ -14,22 +12,6 @@ Future<void> main() async {
   Map<String, dynamic> mainConfig = await loadConfig('config.json');
   Map<String, dynamic> authConfig = await loadConfig('auth.json');
   Map<String, dynamic> config = mergeMaps(mainConfig, authConfig);
-
-  await hotKeyManager.unregisterAll();
-  HotKey _hotKey = HotKey(
-    key: PhysicalKeyboardKey.keyQ,
-    modifiers: [HotKeyModifier.alt],
-    scope: HotKeyScope.system,
-  );
-  await hotKeyManager.register(
-    _hotKey,
-    keyDownHandler: (hotKey) {
-      print('onKeyDown+${hotKey.toJson()}');
-    },
-  );
-  // await hotKeyManager.unregister(_hotKey);
-  // await hotKeyManager.unregisterAll();
-
   runApp(MyApp(config: config));
 }
 
