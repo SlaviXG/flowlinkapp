@@ -12,9 +12,6 @@ class TaskHandler extends Handler {
   void handle(Map<String, dynamic> response) {
     if(response.containsKey('task')) {
       response = response['task'];
-      print(response);
-      print(response['notes']=="null");
-      print(response['notes']==null);
       _googleAuthService.createTask(
         response['title'],
         notes: ((response['notes']!=null) ? (response['notes']) : (null)),
