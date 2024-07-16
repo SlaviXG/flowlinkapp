@@ -1,11 +1,9 @@
-# flowlinkapp
+# FlowLink
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+FlowLink is an application that harnesses the power of Gemini, Google Tasks, and Google Calendar APIs to enhance productivity and streamline busy lifestyles. Simply select the text, click your designated button (or use a hotkey, depending on your settings), and let the application manage the content, whether it's an event or a task you need to complete.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<Provide video link>.
+
 
 ## Building global hotkey listener
 ```bash
