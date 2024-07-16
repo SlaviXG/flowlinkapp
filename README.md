@@ -2,13 +2,16 @@
 
 FlowLink is an application that harnesses the power of Gemini, Google Tasks, and Google Calendar APIs to enhance productivity and streamline busy lifestyles. Simply select the text, click your designated button (or use a hotkey, depending on your settings), and let the application manage the content, whether it's an event or a task you need to complete.
 
-<Provide video link>.
+<br>
+!Provide video link!
+<br>
 
-
-## Building global hotkey listener
-```bash
-    pyinstaller --onefile --hidden-import pynput.keyboard.hotkey --hidden-import pynput.keyboard.listener lib/hotkey_listener.py
-```
+## Requirements
+### Windows
+### Linux
+- `keybinder-3.0`
+Run the following command:
+```shell sudo apt-get install keybinder-3.0```
 
 ## Build & run
 1. In the main directory, create `auth.json` file.
