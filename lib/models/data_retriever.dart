@@ -1,5 +1,7 @@
 import 'package:hotkey_manager/hotkey_manager.dart';
+import 'package:mouse_event/mouse_event.dart';
 import 'package:flutter/services.dart';
+import 'dart:async';
 
 
 class DataRetriever {
@@ -7,6 +9,7 @@ class DataRetriever {
 
   DataRetriever(Map <String, dynamic> config, Future<void> Function() hotkeyCallback) {
     _currentHotKey = hotKeyFromString(config['capture_hotkey']);
+    if(config['enable_mouse_x_button']) _registerMouseXButton(hotkeyCallback);
     _registerHotKey(_currentHotKey, hotkeyCallback);
   }
 
@@ -23,6 +26,18 @@ class DataRetriever {
         await hotkeyCallback();
       },
     );
+  }
+
+  Future<void> _registerMouseXButton(Future<void> Function() hotkeyCallback) async {
+    MouseEventPlugin.startListening((mouseEvent) async {
+      if(mouseEvent.mouseMsg == MouseEventMsg.WM_XBUTTONDOWN) {
+        await hotkeyCallback();
+      }
+    });
+  }
+
+  Future<void> _unregisterMouseXButton() async {
+    MouseEventPlugin.cancelListening();
   }
 
   static HotKey hotKeyFromString(String hotKeyString) {

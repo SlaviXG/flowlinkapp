@@ -16,7 +16,7 @@ Run the following command:
 
 ## Build & run
 1. In the main directory, create `auth.json` file.
-2. Pase the following content and provide your gemini api key, google cloud client id, project id and secret.
+2. Pase the following content and provide your gemini api key, google cloud client id, project id and the secret.
 ```
 {
     {   

@@ -14,6 +14,7 @@
     },
     "data_retriever": {
         "capture_hotkey": "Alt+Q",
+        "enable_mouse_x_button": true,
         "capture_images": false
     }
 }
