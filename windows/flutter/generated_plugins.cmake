@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  flutter_auto_gui_windows
   flutter_secure_storage_windows
   hotkey_manager_windows
   mouse_event

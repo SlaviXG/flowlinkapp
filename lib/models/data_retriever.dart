@@ -1,7 +1,9 @@
+import 'package:flutter_auto_gui/flutter_auto_gui.dart';
 import 'package:hotkey_manager/hotkey_manager.dart';
 import 'package:mouse_event/mouse_event.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
+import 'dart:io';
 
 
 class DataRetriever {
@@ -39,6 +41,24 @@ class DataRetriever {
   Future<void> _unregisterMouseXButton() async {
     MouseEventPlugin.cancelListening();
   }
+
+  static Future<void> simulateCtrlC() async {
+    if (Platform.isWindows || Platform.isLinux) {
+      FlutterAutoGUI.keyDown(key: 'ctrl');
+      FlutterAutoGUI.keyDown(key: 'c');
+      await Future.delayed(const Duration(milliseconds: 100));
+      FlutterAutoGUI.keyUp(key: 'c');
+      FlutterAutoGUI.keyUp(key: 'ctrl');
+    } else if (Platform.isMacOS) {
+      FlutterAutoGUI.keyDown(key: 'command');
+      FlutterAutoGUI.keyDown(key: 'c');
+      await Future.delayed(const Duration(milliseconds: 100));
+      FlutterAutoGUI.keyUp(key: 'c');
+      FlutterAutoGUI.keyUp(key: 'command');
+    } else {
+      print('Unsupported platform');
+    }
+}
 
   static HotKey hotKeyFromString(String hotKeyString) {
     final hotKeyComponents = hotKeyString.split('+');
