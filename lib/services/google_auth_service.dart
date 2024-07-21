@@ -1,4 +1,5 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:http/http.dart' as http;
 import 'package:googleapis/tasks/v1.dart';
@@ -6,7 +7,7 @@ import 'package:googleapis/calendar/v3.dart';
 import 'dart:convert';
 
 class GoogleAuthService {
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
   late final ClientId _clientId;
   late final List<String> _scopes;
 
@@ -30,10 +31,13 @@ class GoogleAuthService {
     return client;
   }
 
-  void _prompt(String url) {
+  void _prompt(String url) async {
     print('Please go to the following URL and grant access:');
     print('  => $url');
-    print('');
+      final Uri _url = Uri.parse(url);
+      if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
+    }
   }
 
   Future<AccessCredentials?> _getStoredCredentials() async {
@@ -49,6 +53,10 @@ class GoogleAuthService {
       key: 'google_credentials',
       value: json.encode(credentials.toJson()),
     );
+  }
+
+  Future<void> forgetCredentials() async {
+    await _storage.delete(key: 'google_credentials');
   }
 
   Future<String> _getDefaultTaskListId(TasksApi tasksApi) async {

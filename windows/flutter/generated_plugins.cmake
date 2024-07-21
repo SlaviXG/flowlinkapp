@@ -8,6 +8,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   hotkey_manager_windows
   mouse_event
   screen_retriever
+  url_launcher_windows
   window_manager
 )
 

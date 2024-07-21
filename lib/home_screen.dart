@@ -73,6 +73,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+   Future<void> _forgetCredentials() async {
+    try {
+      await _dataProcessor.getGoogleAuthService().forgetCredentials();
+      setState(() {
+        _output += 'Successfully forgot credentials.\n';
+      });
+    } catch (e) {
+      setState(() {
+        _output += 'Failed to forget credentials: $e\n';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,6 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: _loginWithGoogle,
               child: Text('Login with Google'),
             ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _forgetCredentials, 
+              child: Text('Forget Credentials')),
             SizedBox(height: 20),
             Text(
               'Output:\n$_output',

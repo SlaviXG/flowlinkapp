@@ -29,6 +29,7 @@ class DataProcessor {
       response = json.decode(responseText);
     } catch (e) {
       print('Failed to decode JSON: $e');
+      print(responseText);
     }
     return response;
   }

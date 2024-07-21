@@ -10,7 +10,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await windowManager.ensureInitialized();
   Map<String, dynamic> mainConfig = await loadConfig('config.json');
-  Map<String, dynamic> authConfig = await loadConfig('auth.json');
+  Map<String, dynamic> authConfig = await loadConfig('secrets.json');
   Map<String, dynamic> config = mergeMaps(mainConfig, authConfig);
   runApp(MyApp(config: config));
 }
