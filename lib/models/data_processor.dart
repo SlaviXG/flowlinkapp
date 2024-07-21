@@ -13,7 +13,7 @@ class DataProcessor {
 
   DataProcessor(Map <String, dynamic> config, GoogleAuthService googleAuthService) {
     _config = config;
-    _geminiService = GeminiService(_config['services']['gemini']['api_key'], _config['services']['gemini']['system_prompt']);
+    _geminiService = GeminiService(_config['services']['gemini']);
     _googleAuthService = googleAuthService;
     _eventHandler = EventHandler(_googleAuthService);
     _taskHandler = TaskHandler(_googleAuthService);

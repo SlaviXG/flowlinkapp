@@ -4,8 +4,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 class GeminiService {
   late GenerativeModel model;
 
-  GeminiService(String apiKey, String systemPrompt) {
-    model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: apiKey, systemInstruction: Content.text(systemPrompt));
+  GeminiService(Map <String, dynamic> config) {
+    model = GenerativeModel(model: config['model'], apiKey: config['api_key'], systemInstruction: Content.text(config['system_prompt']));
   }
 
   Future<String> generateContent(String textForExtraction) async {
