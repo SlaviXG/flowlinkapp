@@ -56,4 +56,4 @@ __pycache__/
 *.spec
 
 #Auth.
-auth.json
+secrets.json

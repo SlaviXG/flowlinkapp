@@ -15,7 +15,7 @@ Run the following command:
 ```shell sudo apt-get install keybinder-3.0```
 
 ## Build & run
-1. In the main directory, create `auth.json` file.
+1. In the main directory, create `secrets.json` file.
 2. Pase the following content and provide your gemini api key, google cloud client id, project id and the secret.
 ```
 {
