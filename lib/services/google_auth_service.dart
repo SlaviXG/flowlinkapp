@@ -34,8 +34,8 @@ class GoogleAuthService {
   void _prompt(String url) async {
     print('Please go to the following URL and grant access:');
     print('  => $url');
-      final Uri _url = Uri.parse(url);
-      if (!await launchUrl(_url)) {
+    final Uri _url = Uri.parse(url);
+    if (!await launchUrl(_url)) {
       throw Exception('Could not launch $_url');
     }
   }

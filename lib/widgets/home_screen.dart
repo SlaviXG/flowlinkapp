@@ -1,12 +1,15 @@
-import 'package:flowlinkapp/models/data_processor.dart';
-import 'package:flowlinkapp/models/data_retriever.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flowlinkapp/models/data_processor.dart';
+import 'package:flowlinkapp/models/data_retriever.dart';
+import 'package:flowlinkapp/services/google_auth_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final Map<String, dynamic> config;
+  final GoogleAuthService googleAuthService;
 
-  HomeScreen({required this.config});
+  HomeScreen({required this.config, required this.googleAuthService});
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -18,20 +21,31 @@ class _HomeScreenState extends State<HomeScreen> {
   String _output = '';
   String? _responseText;
   bool _isLoading = false;
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
 
   @override
   void initState() {
     super.initState();
-    _dataRetriever = DataRetriever(widget.config['data_retriever'], _processContent);
-    _dataProcessor = DataProcessor(widget.config['data_processor']);
+    try {
+      final dataRetrieverConfig = widget.config['data_retriever'];
+      final dataProcessorConfig = widget.config['data_processor'];
+
+      if (dataRetrieverConfig == null || dataProcessorConfig == null) {
+        throw Exception('Configuration for DataRetriever or DataProcessor is missing');
+      }
+
+      _dataRetriever = DataRetriever(dataRetrieverConfig, _processContent);
+      _dataProcessor = DataProcessor(dataProcessorConfig, widget.googleAuthService);
+    } catch (e) {
+      print('Error initializing services: $e');
+    }
   }
 
   Future<void> _processContent() async {
-    
     ClipboardData? prevClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
     await DataRetriever.simulateCtrlC();
     ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    
+
     if (clipboardData != null) {
       setState(() {
         _isLoading = true;
@@ -44,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _responseText = response.toString();
           _isLoading = false;
         });
-        if(prevClipboardData != null) {
+        if (prevClipboardData != null) {
           await Clipboard.setData(prevClipboardData);
         }
         await _dataProcessor.submit(response);
@@ -57,28 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       print('Clipboard is empty or does not contain plain text.');
     }
-    
   }
 
-  Future<void> _loginWithGoogle() async {
+  Future<void> _forgetCredentials() async {
     try {
-      await _dataProcessor.getGoogleAuthService().getAuthenticatedClient();
-      setState(() {
-        _output += 'Successfully authenticated with Google.\n';
-      });
-    } catch (e) {
-      setState(() {
-        _output += 'Failed to authenticate with Google: $e\n';
-      });
-    }
-  }
-
-   Future<void> _forgetCredentials() async {
-    try {
-      await _dataProcessor.getGoogleAuthService().forgetCredentials();
+      await widget.googleAuthService.forgetCredentials();
+      await _storage.delete(key: 'google_credentials');
       setState(() {
         _output += 'Successfully forgot credentials.\n';
       });
+      Navigator.pushReplacementNamed(context, '/login');
     } catch (e) {
       setState(() {
         _output += 'Failed to forget credentials: $e\n';
@@ -98,13 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: _loginWithGoogle,
-              child: Text('Login with Google'),
+              onPressed: _forgetCredentials,
+              child: Text('Forget Credentials'),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _forgetCredentials, 
-              child: Text('Forget Credentials')),
             SizedBox(height: 20),
             Text(
               'Output:\n$_output',
@@ -117,6 +115,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   )
                 : Container(),
             SizedBox(height: 20),
+            if (_isLoading)
+              CircularProgressIndicator(),
           ],
         ),
       ),

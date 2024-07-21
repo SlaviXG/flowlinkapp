@@ -11,10 +11,10 @@ class DataProcessor {
   late EventHandler _eventHandler;
   late TaskHandler _taskHandler;
 
-  DataProcessor(Map <String, dynamic> config) {
+  DataProcessor(Map <String, dynamic> config, GoogleAuthService googleAuthService) {
     _config = config;
     _geminiService = GeminiService(_config['services']['gemini']['api_key'], _config['services']['gemini']['system_prompt']);
-    _googleAuthService = GoogleAuthService(_config['services']['flowlink']['client_id'], _config['services']['flowlink']['client_secret'], _config['services']['flowlink']['scopes']);
+    _googleAuthService = googleAuthService;
     _eventHandler = EventHandler(_googleAuthService);
     _taskHandler = TaskHandler(_googleAuthService);
     _eventHandler.setNext(_taskHandler);
