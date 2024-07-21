@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import 'package:flowlinkapp/models/data_processor.dart';
 import 'package:flowlinkapp/models/data_retriever.dart';
-import 'package:flowlinkapp/services/google_auth_service.dart';
+import 'package:flowlinkapp/app_state.dart';
 
 class HomeScreen extends StatefulWidget {
-  final Map<String, dynamic> config;
-  final GoogleAuthService googleAuthService;
-
-  HomeScreen({required this.config, required this.googleAuthService});
-
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
@@ -27,15 +23,16 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     try {
-      final dataRetrieverConfig = widget.config['data_retriever'];
-      final dataProcessorConfig = widget.config['data_processor'];
+      final appState = Provider.of<AppState>(context, listen: false);
+      final dataRetrieverConfig = appState.config['data_retriever'];
+      final dataProcessorConfig = appState.config['data_processor'];
 
       if (dataRetrieverConfig == null || dataProcessorConfig == null) {
         throw Exception('Configuration for DataRetriever or DataProcessor is missing');
       }
 
       _dataRetriever = DataRetriever(dataRetrieverConfig, _processContent);
-      _dataProcessor = DataProcessor(dataProcessorConfig, widget.googleAuthService);
+      _dataProcessor = DataProcessor(dataProcessorConfig, appState.googleAuthService);
     } catch (e) {
       print('Error initializing services: $e');
     }
@@ -73,9 +70,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  Future<void> _forgetCredentials() async {
+  Future<void> _logout() async {
     try {
-      await widget.googleAuthService.forgetCredentials();
+      _dataRetriever.unregisterHotKeys();
+      _dataRetriever.unregisterMouseXButton();
+      final appState = Provider.of<AppState>(context, listen: false);
+      await appState.googleAuthService.forgetCredentials();
       await _storage.delete(key: 'google_credentials');
       setState(() {
         _output += 'Successfully forgot credentials.\n';
@@ -100,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ElevatedButton(
-              onPressed: _forgetCredentials,
-              child: Text('Forget Credentials'),
+              onPressed: _logout,
+              child: Text('Log out'),
             ),
             SizedBox(height: 20),
             Text(

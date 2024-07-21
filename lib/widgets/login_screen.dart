@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flowlinkapp/widgets/home_screen.dart';
-import 'package:flowlinkapp/services/google_auth_service.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'dart:convert';
+import 'package:provider/provider.dart';
+import 'package:flowlinkapp/app_state.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Map<String, dynamic> config;
-  late GoogleAuthService googleAuthService;
-
-  LoginScreen({required this.config, required this.googleAuthService});
-
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final FlutterSecureStorage _storage = FlutterSecureStorage();
+  final FlutterSecureStorage _storage = const FlutterSecureStorage();
   bool _isAuthenticating = false;
 
   @override
@@ -30,15 +25,11 @@ class _LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      final authClient = await widget.googleAuthService.getAuthenticatedClient();
+      final appState = Provider.of<AppState>(context, listen: false);
+      final authClient = await appState.googleAuthService.getAuthenticatedClient();
       await _storeCredentials(authClient.credentials);
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(config: widget.config, googleAuthService: widget.googleAuthService),
-        ),
-      );
+      Navigator.pushReplacementNamed(context, '/home');
     } catch (error) {
       print(error);
     } finally {

@@ -8,6 +8,7 @@ import 'dart:io';
 
 class DataRetriever {
   late HotKey _currentHotKey;
+  bool paused = false;
 
   DataRetriever(Map <String, dynamic> config, Future<void> Function() hotkeyCallback) {
     _currentHotKey = hotKeyFromString(config['capture_hotkey']);
@@ -24,8 +25,9 @@ class DataRetriever {
     await hotKeyManager.register(
       _hotKey,
       keyDownHandler: (hotKey) async {
-        print('onKeyDown+${hotKey.toJson()}');
-        await hotkeyCallback();
+        if(!paused) {
+          await hotkeyCallback();
+        }
       },
     );
   }
@@ -33,13 +35,19 @@ class DataRetriever {
   Future<void> _registerMouseXButton(Future<void> Function() hotkeyCallback) async {
     MouseEventPlugin.startListening((mouseEvent) async {
       if(mouseEvent.mouseMsg == MouseEventMsg.WM_XBUTTONDOWN) {
-        await hotkeyCallback();
+        if(!paused) {
+          await hotkeyCallback();
+        }
       }
     });
   }
 
-  Future<void> _unregisterMouseXButton() async {
+  Future<void> unregisterMouseXButton() async {
     MouseEventPlugin.cancelListening();
+  }
+
+  Future<void> unregisterHotKeys() async {
+    await hotKeyManager.unregisterAll();
   }
 
   static Future<void> simulateCtrlC() async {

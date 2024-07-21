@@ -6,7 +6,9 @@ import 'package:flowlinkapp/widgets/splash_screen.dart';
 import 'package:flowlinkapp/utils/data.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+import 'package:flowlinkapp/app_state.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,11 +17,17 @@ Future<void> main() async {
   Map<String, dynamic> authConfig = await loadConfig('secrets.json');
   Map<String, dynamic> config = mergeMaps(mainConfig, authConfig);
   GoogleAuthService googleAuthService = GoogleAuthService(
-      config['data_processor']['services']['flowlink']['client_id'],
-      config['data_processor']['services']['flowlink']['client_secret'],
-      config['data_processor']['services']['flowlink']['scopes'],
-    );
-  runApp(MyApp(config: config, googleAuthService: googleAuthService));
+    config['data_processor']['services']['flowlink']['client_id'],
+    config['data_processor']['services']['flowlink']['client_secret'],
+    config['data_processor']['services']['flowlink']['scopes'],
+  );
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => AppState(config: config, googleAuthService: googleAuthService),
+      child: MyApp(),
+    ),
+  );
 }
 
 Future<Map<String, dynamic>> loadConfig(String configPath) async {
@@ -28,11 +36,6 @@ Future<Map<String, dynamic>> loadConfig(String configPath) async {
 }
 
 class MyApp extends StatelessWidget {
-  final Map<String, dynamic> config;
-  final GoogleAuthService googleAuthService;
-
-  MyApp({required this.config, required this.googleAuthService});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,9 +45,9 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => SplashScreen(config: config),
-        '/login': (context) => LoginScreen(config: config, googleAuthService: googleAuthService),
-        '/home': (context) => HomeScreen(config: config, googleAuthService: googleAuthService),
+        '/': (context) => SplashScreen(),
+        '/login': (context) => LoginScreen(),
+        '/home': (context) => HomeScreen(),
       },
     );
   }
