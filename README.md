@@ -40,7 +40,7 @@ Run the following command:
 }
 ```
 
-2. Run
+3. Run
 ```bash
     flutter run -d windows
 ```
