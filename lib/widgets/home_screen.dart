@@ -40,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _processContent() async {
     ClipboardData? prevClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
+    await Future.delayed(const Duration(milliseconds: 200));
     await DataRetriever.simulateCtrlC();
     ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
 
