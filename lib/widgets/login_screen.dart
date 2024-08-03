@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       child: Scaffold(
-        backgroundColor: Colors.transparent, // Ensure Scaffold background is transparent
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           title: Text('Login with Google Account'),
         ),

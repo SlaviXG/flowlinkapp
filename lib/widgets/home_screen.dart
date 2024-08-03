@@ -27,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loadTimeSaved();
     try {
       final appState = Provider.of<AppState>(context, listen: false);
       final dataRetrieverConfig = appState.config['data_retriever'];
@@ -41,6 +42,19 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (e) {
       print('Error initializing services: $e');
     }
+  }
+
+  Future<void> _loadTimeSaved() async {
+    String? savedTime = await _storage.read(key: 'time_saved');
+    if (savedTime != null) {
+      setState(() {
+        _timeSaved = double.parse(savedTime);
+      });
+    }
+  }
+
+  Future<void> _saveTimeSaved() async {
+    await _storage.write(key: 'time_saved', value: _timeSaved.toString());
   }
 
   Future<void> _processContent() async {
@@ -60,19 +74,20 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _responseText = response.toString();
           _isLoading = false;
-          _timeSaved += 0.5; // Update time saved (for example purposes)
+          _timeSaved += 0.5;
+          _saveTimeSaved();
         });
         if (prevClipboardData != null) {
           await Clipboard.setData(prevClipboardData);
         }
         await _dataProcessor.submit(response);
-        _animatedLogoKey.currentState?.accelerate(false); // Reset the speed after processing
+        _animatedLogoKey.currentState?.accelerate(false);
       } catch (e) {
         setState(() {
           _responseText = 'Error: $e';
           _isLoading = false;
         });
-        _animatedLogoKey.currentState?.accelerate(false); // Reset the speed even on error
+        _animatedLogoKey.currentState?.accelerate(false);
       }
     } else {
       print('Clipboard is empty or does not contain plain text.');
@@ -86,7 +101,9 @@ class _HomeScreenState extends State<HomeScreen> {
       final appState = Provider.of<AppState>(context, listen: false);
       await appState.googleAuthService.forgetCredentials();
       await _storage.delete(key: 'google_credentials');
+      await _storage.delete(key: 'time_saved');
       setState(() {
+        _timeSaved = 0.0;
         _output += 'Successfully forgot credentials.\n';
       });
       Navigator.pushReplacementNamed(context, '/login');
