@@ -47,15 +47,16 @@ class DataRetriever {
 
   static Future<void> simulateCtrlC() async {
     if (Platform.isWindows || Platform.isLinux) {
+      //FlutterAutoGUI.hotkey(keys: ['ctrl', 'c']);
       FlutterAutoGUI.keyDown(key: 'ctrl');
       FlutterAutoGUI.keyDown(key: 'c');
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 150));
       FlutterAutoGUI.keyUp(key: 'c');
       FlutterAutoGUI.keyUp(key: 'ctrl');
     } else if (Platform.isMacOS) {
       FlutterAutoGUI.keyDown(key: 'command');
       FlutterAutoGUI.keyDown(key: 'c');
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 150));
       FlutterAutoGUI.keyUp(key: 'c');
       FlutterAutoGUI.keyUp(key: 'command');
     } else {

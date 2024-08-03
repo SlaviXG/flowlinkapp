@@ -21,6 +21,19 @@ Future<void> main() async {
     config['data_processor']['services']['flowlink']['client_secret'],
     config['data_processor']['services']['flowlink']['scopes'],
   );
+  
+  WindowOptions windowOptions = const WindowOptions(
+    size: Size(420, 550),
+    backgroundColor: Colors.transparent,
+    skipTaskbar: true,
+    center: true,
+    titleBarStyle: TitleBarStyle.normal,
+  );
+  await windowManager.setResizable(false);
+  windowManager.waitUntilReadyToShow(windowOptions, () async {
+    await windowManager.show();
+    await windowManager.focus();
+  });
 
   runApp(
     ChangeNotifierProvider(

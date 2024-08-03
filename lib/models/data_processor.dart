@@ -26,10 +26,10 @@ class DataProcessor {
     try {
       final RegExp regex = RegExp(r'^```json|```$');
       responseText = responseText.replaceAll(regex, '').trim();
+      print(responseText);
       response = json.decode(responseText);
     } catch (e) {
       print('Failed to decode JSON: $e');
-      print(responseText);
     }
     return response;
   }

@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:flowlinkapp/models/data_processor.dart';
 import 'package:flowlinkapp/models/data_retriever.dart';
 import 'package:flowlinkapp/app_state.dart';
+import 'package:flowlinkapp/widgets/animated_logo.dart';
+import 'package:flowlinkapp/widgets/time_saved_display.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _responseText;
   bool _isLoading = false;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  double _timeSaved = 0.0;
 
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _processContent() async {
     ClipboardData? prevClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    await Future.delayed(const Duration(milliseconds: 200));
+    await Future.delayed(const Duration(milliseconds: 300));
     await DataRetriever.simulateCtrlC();
     ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
 
@@ -55,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
         setState(() {
           _responseText = response.toString();
           _isLoading = false;
+          _timeSaved += 0.5; // Update time saved (for example purposes)
         });
         if (prevClipboardData != null) {
           await Clipboard.setData(prevClipboardData);
@@ -98,8 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Center(
+              child: AnimatedLogo(),
+            ),
+            SizedBox(height: 20),
+            TimeSavedDisplay(hours: _timeSaved),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: _logout,
               child: Text('Log out'),
