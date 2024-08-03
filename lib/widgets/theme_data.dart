@@ -4,7 +4,8 @@ const Color accentColor = Color(0xFF8E94F2);
 const Color backgroundBodyColorStart = Color(0xFF9FA0FF);
 const Color backgroundBodyColorEnd = Color.fromARGB(255, 102, 95, 204);
 const Color titleTextColor = Color.fromARGB(255, 244, 251, 255);
-const Color shadowColor = Color.fromARGB(255, 0, 53, 84);
+const Color shadowColor = Color.fromARGB(255, 0, 29, 46);
+const Color circularIndicatorColor = Color.fromARGB(255, 226, 227, 247);
 
 ThemeData buildThemeData() {
   return ThemeData(

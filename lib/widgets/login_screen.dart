@@ -73,23 +73,29 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: AnimatedLogo(),
               ),
-              SizedBox(height: 70),
+              SizedBox(height: 120),
               _isAuthenticating
-                  ? CircularProgressIndicator()
-                  : ElevatedButton(
-                      onPressed: _login,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Image.asset(
-                            'assets/google_icon.png',
-                            height: 24.0,
-                          ),
-                          SizedBox(width: 10),
-                          Text('Login'),
-                        ],
+                  ? const CircularProgressIndicator(
+                      color: circularIndicatorColor,
+                    )
+                  : SizedBox(
+                    height: 40,
+                    width: 120,
+                    child: ElevatedButton(
+                        onPressed: _login,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Image.asset(
+                              'assets/google_icon.png',
+                              height: 24.0,
+                            ),
+                            SizedBox(width: 10),
+                            Text('Login'),
+                          ],
+                        ),
                       ),
-                    ),
+                    )
             ],
           ),
         ),

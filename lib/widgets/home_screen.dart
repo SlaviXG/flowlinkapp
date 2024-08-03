@@ -96,6 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -117,20 +119,22 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 50),
+              SizedBox(height: 40),
               Center(
                 child: AnimatedLogo(),
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 40),
               TimeSavedDisplay(hours: _timeSaved),
-              SizedBox(height: 50),
+              SizedBox(height: 40),
               ElevatedButton(
                 onPressed: _logout,
                 child: Text('Log out'),
               ),
               SizedBox(height: 20),
               if (_isLoading)
-                CircularProgressIndicator(),
+                const CircularProgressIndicator(
+                  color: circularIndicatorColor,
+                ),
             ],
           ),
         ),

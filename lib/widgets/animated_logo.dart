@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flowlinkapp/widgets/theme_data.dart';
 
 class AnimatedLogo extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 7),
+      duration: const Duration(seconds: 6),
       vsync: this,
     )..repeat();
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
@@ -31,11 +32,19 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
       turns: _animation,
       child: Center(
         child: Container(
-          width: 110,
-          height: 110,
+          width: 150,
+          height: 150,
           decoration: const BoxDecoration(
-            color: Colors.white, 
+            color: Colors.white,
             shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: shadowColor,
+                spreadRadius: 4,
+                blurRadius: 7,
+                offset: Offset(0, 3),
+              ),
+            ],
           ),
           child: ClipOval(
             child: Image.asset('assets/flowlink_logo.png'),
