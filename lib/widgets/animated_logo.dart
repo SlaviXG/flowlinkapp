@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flowlinkapp/widgets/theme_data.dart';
 
+const basicDuration = 6;
+const acceleratedDuration = 3;
+
 class AnimatedLogo extends StatefulWidget {
+  AnimatedLogo({Key? key}) : super(key: key);
+
   @override
-  _AnimatedLogoState createState() => _AnimatedLogoState();
+  AnimatedLogoState createState() => AnimatedLogoState();
 }
 
-class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderStateMixin {
+class AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -14,7 +19,7 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(seconds: 6),
+      duration: const Duration(seconds: basicDuration),
       vsync: this,
     )..repeat();
     _animation = Tween<double>(begin: 0, end: 1).animate(_controller);
@@ -24,6 +29,22 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  void setDuration(Duration newDuration) {
+    setState(() {
+      _controller.duration = newDuration;
+      _controller.reset();
+      _controller.repeat();
+    });
+  }
+
+  void accelerate(bool accelerate) {
+    if (accelerate) {
+      setDuration(const Duration(seconds: acceleratedDuration));
+    } else {
+      setDuration(const Duration(seconds: basicDuration));
+    }
   }
 
   @override

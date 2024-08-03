@@ -21,6 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _responseText;
   bool _isLoading = false;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
+  final GlobalKey<AnimatedLogoState> _animatedLogoKey = GlobalKey<AnimatedLogoState>();
   double _timeSaved = 0.0;
 
   @override
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (clipboardData != null) {
       setState(() {
-        _isLoading = true;
+        _animatedLogoKey.currentState?.accelerate(true);
         _responseText = null;
       });
 
@@ -65,11 +66,13 @@ class _HomeScreenState extends State<HomeScreen> {
           await Clipboard.setData(prevClipboardData);
         }
         await _dataProcessor.submit(response);
+        _animatedLogoKey.currentState?.accelerate(false); // Reset the speed after processing
       } catch (e) {
         setState(() {
           _responseText = 'Error: $e';
           _isLoading = false;
         });
+        _animatedLogoKey.currentState?.accelerate(false); // Reset the speed even on error
       }
     } else {
       print('Clipboard is empty or does not contain plain text.');
@@ -121,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               SizedBox(height: 40),
               Center(
-                child: AnimatedLogo(),
+                child: AnimatedLogo(key: _animatedLogoKey),
               ),
               SizedBox(height: 40),
               TimeSavedDisplay(hours: _timeSaved),
@@ -131,10 +134,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Text('Log out'),
               ),
               SizedBox(height: 20),
-              if (_isLoading)
-                const CircularProgressIndicator(
-                  color: circularIndicatorColor,
-                ),
             ],
           ),
         ),
