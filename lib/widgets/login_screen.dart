@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:flowlinkapp/app_state.dart';
 import 'package:flowlinkapp/widgets/animated_logo.dart';
+import 'package:flowlinkapp/widgets/theme_data.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -49,35 +50,48 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Login with Google Account'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Center(
-              child: AnimatedLogo(),
-            ),
-            SizedBox(height: 70),
-            _isAuthenticating
-                ? CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _login,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Image.asset(
-                          'assets/google_icon.png',
-                          height: 24.0,
-                        ),
-                        SizedBox(width: 10),
-                        Text('Login'),
-                      ],
-                    ),
-                  ),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            backgroundBodyColorStart,
+            backgroundBodyColorEnd,
           ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent, // Ensure Scaffold background is transparent
+        appBar: AppBar(
+          title: Text('Login with Google Account'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Center(
+                child: AnimatedLogo(),
+              ),
+              SizedBox(height: 70),
+              _isAuthenticating
+                  ? CircularProgressIndicator()
+                  : ElevatedButton(
+                      onPressed: _login,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            'assets/google_icon.png',
+                            height: 24.0,
+                          ),
+                          SizedBox(width: 10),
+                          Text('Login'),
+                        ],
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );

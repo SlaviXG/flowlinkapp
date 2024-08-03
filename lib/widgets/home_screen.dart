@@ -7,6 +7,7 @@ import 'package:flowlinkapp/models/data_retriever.dart';
 import 'package:flowlinkapp/app_state.dart';
 import 'package:flowlinkapp/widgets/animated_logo.dart';
 import 'package:flowlinkapp/widgets/time_saved_display.dart';
+import 'package:flowlinkapp/widgets/theme_data.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -95,30 +96,43 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('FlowLink'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 50),
-            Center(
-              child: AnimatedLogo(),
-            ),
-            SizedBox(height: 50),
-            TimeSavedDisplay(hours: _timeSaved),
-            SizedBox(height: 50),
-            ElevatedButton(
-              onPressed: _logout,
-              child: Text('Log out'),
-            ),
-            SizedBox(height: 20),
-            if (_isLoading)
-              CircularProgressIndicator(),
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            backgroundBodyColorStart,
+            backgroundBodyColorEnd,
           ],
+        ),
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text('FlowLink'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 50),
+              Center(
+                child: AnimatedLogo(),
+              ),
+              SizedBox(height: 50),
+              TimeSavedDisplay(hours: _timeSaved),
+              SizedBox(height: 50),
+              ElevatedButton(
+                onPressed: _logout,
+                child: Text('Log out'),
+              ),
+              SizedBox(height: 20),
+              if (_isLoading)
+                CircularProgressIndicator(),
+            ],
+          ),
         ),
       ),
     );

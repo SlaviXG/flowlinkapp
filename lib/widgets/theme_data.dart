@@ -1,57 +1,50 @@
 import 'package:flutter/material.dart';
 
-//https://coolors.co/palette/757bc8-8187dc-8e94f2-9fa0ff-ada7ff-bbadff-cbb2fe-dab6fc-ddbdfc-e0c3fc
+const Color accentColor = Color(0xFF8E94F2);
+const Color backgroundBodyColorStart = Color(0xFF9FA0FF);
+const Color backgroundBodyColorEnd = Color.fromARGB(255, 102, 95, 204);
+const Color titleTextColor = Color.fromARGB(255, 244, 251, 255);
+const Color shadowColor = Color.fromARGB(255, 0, 53, 84);
 
 ThemeData buildThemeData() {
   return ThemeData(
     useMaterial3: true,
-
-    scaffoldBackgroundColor: Color.fromARGB(255, 52, 209, 191),
+    scaffoldBackgroundColor: Colors.transparent, // Set to transparent to allow the gradient to show
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Color.fromARGB(255, 94, 178, 224),
+      backgroundColor: Colors.transparent, // Set to transparent to allow gradient to show
       elevation: 0,
       titleTextStyle: TextStyle(
-        // color: Color.fromARGB(255, 0, 53, 84),
-        color: Colors.white,
+        color: titleTextColor,
         fontSize: 20,
         fontWeight: FontWeight.bold,
         letterSpacing: 1,
         shadows: [
-        Shadow(
-          color: Color.fromARGB(255, 0, 53, 84),      
-          blurRadius: 2.5,          
-          offset: Offset(2.5, 2.0), 
-        ),
-      ],
+          Shadow(
+            color: shadowColor,
+            blurRadius: 2.5,
+            offset: Offset(2.5, 2.0),
+          ),
+        ],
       ),
     ),
 
     textTheme: const TextTheme(
-      // displayLarge: TextStyle(
-      //   color: Color.fromARGB(255, 244, 251, 255),
-      // ),
-      // titleLarge: TextStyle(
-      //   color: Color.fromARGB(255, 244, 251, 255),
-      // ),
       bodyMedium: TextStyle(
-        color: Color.fromARGB(255, 244, 251, 255),
+        color: titleTextColor,
         shadows: [
-        Shadow(
-          color: Color.fromARGB(255, 0, 53, 84),      
-          blurRadius: 2.5,          
-          offset: Offset(2.5, 2.0), 
-        ),
-      ],
+          Shadow(
+            color: shadowColor,
+            blurRadius: 2.5,
+            offset: Offset(2.5, 2.0),
+          ),
+        ],
       ),
-      // displaySmall: TextStyle(
-      //   color: Color.fromARGB(255, 244, 251, 255),
-      // ),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: const Color.fromARGB(255, 0, 53, 84),
+        foregroundColor: shadowColor,
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -60,4 +53,3 @@ ThemeData buildThemeData() {
     ),
   );
 }
-
