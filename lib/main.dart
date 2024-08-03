@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flowlinkapp/widgets/home_screen.dart';
 import 'package:flowlinkapp/widgets/login_screen.dart';
 import 'package:flowlinkapp/widgets/splash_screen.dart';
+import 'package:flowlinkapp/widgets/theme_data.dart';
 import 'package:flowlinkapp/utils/data.dart';
 import 'dart:convert';
 import 'dart:io';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:flowlinkapp/app_state.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +30,10 @@ Future<void> main() async {
     skipTaskbar: false,
     center: true,
     titleBarStyle: TitleBarStyle.normal,
+    title: "FlowLink",
   );
   await windowManager.setResizable(false);
+  await windowManager.setMaximizable(false);
   windowManager.waitUntilReadyToShow(windowOptions, () async {
     await windowManager.show();
     await windowManager.focus();
@@ -53,9 +57,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FlowLink',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: buildThemeData(),
       initialRoute: '/',
       routes: {
         '/': (context) => SplashScreen(),

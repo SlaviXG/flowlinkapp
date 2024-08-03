@@ -30,10 +30,16 @@ class _AnimatedLogoState extends State<AnimatedLogo> with SingleTickerProviderSt
     return RotationTransition(
       turns: _animation,
       child: Center(
-        child: SizedBox(
+        child: Container(
           width: 110,
           height: 110,
-          child: Image.asset('assets/flowlink_logo.png'),
+          decoration: const BoxDecoration(
+            color: Colors.white, 
+            shape: BoxShape.circle,
+          ),
+          child: ClipOval(
+            child: Image.asset('assets/flowlink_logo.png'),
+          ),
         ),
       ),
     );

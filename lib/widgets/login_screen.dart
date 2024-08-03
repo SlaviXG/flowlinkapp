@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login with Google'),
+        title: Text('Login with Google Account'),
       ),
       body: Center(
         child: Column(
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Center(
               child: AnimatedLogo(),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 70),
             _isAuthenticating
                 ? CircularProgressIndicator()
                 : ElevatedButton(

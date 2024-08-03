@@ -11,12 +11,12 @@ class TimeSavedDisplay extends StatelessWidget {
       children: [
         Text(
           "${hours.toStringAsFixed(1)} hours",
-          style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
-        Text(
+        const SizedBox(height: 10),
+        const Text(
           "Time saved",
-          style: TextStyle(fontSize: 16),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
       ],
     );

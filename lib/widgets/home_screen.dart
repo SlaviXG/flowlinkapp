@@ -104,12 +104,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 50),
             Center(
               child: AnimatedLogo(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             TimeSavedDisplay(hours: _timeSaved),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             ElevatedButton(
               onPressed: _logout,
               child: Text('Log out'),
