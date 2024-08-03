@@ -115,17 +115,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text('Log out'),
             ),
             SizedBox(height: 20),
-            Text(
-              'Output:\n$_output',
-              style: TextStyle(fontSize: 14),
-            ),
-            _responseText != null
-                ? Text(
-                    _responseText!,
-                    style: TextStyle(fontSize: 16),
-                  )
-                : Container(),
-            SizedBox(height: 20),
             if (_isLoading)
               CircularProgressIndicator(),
           ],

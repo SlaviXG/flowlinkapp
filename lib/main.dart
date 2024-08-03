@@ -25,7 +25,7 @@ Future<void> main() async {
   WindowOptions windowOptions = const WindowOptions(
     size: Size(420, 550),
     backgroundColor: Colors.transparent,
-    skipTaskbar: true,
+    skipTaskbar: false,
     center: true,
     titleBarStyle: TitleBarStyle.normal,
   );

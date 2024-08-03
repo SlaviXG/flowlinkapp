@@ -4,6 +4,7 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:flowlinkapp/app_state.dart';
+import 'package:flowlinkapp/widgets/animated_logo.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -56,16 +57,25 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Image.network(
-              'https://via.placeholder.com/150', // Placeholder image URL
-              height: 150,
+            Center(
+              child: AnimatedLogo(),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 50),
             _isAuthenticating
                 ? CircularProgressIndicator()
                 : ElevatedButton(
                     onPressed: _login,
-                    child: Text('Login with Google'),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          'assets/google_icon.png',
+                          height: 24.0,
+                        ),
+                        SizedBox(width: 10),
+                        Text('Login'),
+                      ],
+                    ),
                   ),
           ],
         ),
