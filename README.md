@@ -14,7 +14,7 @@ FlowLink is an application that harnesses the power of Gemini, Google Tasks, and
 - Dart & Flutter
 
 ### Linux & macOS
-The app was not tested for Linux and MacOS. But this package will be required.
+The app was not tested for Linux and MacOS, but this package is supposed to be required.
 - `keybinder-3.0`
 Run the following command:
 ```shell sudo apt-get install keybinder-3.0```
