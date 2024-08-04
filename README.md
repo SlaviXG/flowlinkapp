@@ -51,12 +51,9 @@ Run the following command:
 }
 }
 ```
+3. Use `flutter doctor -v` to fix potential issues.
+4. Use `flutter pub get` to get/update the dependencies.
+5. Run by executing the command `flutter run -d windows`.
 
-3. Run
-
-```bash
-    flutter run -d windows
-```
-
-_*For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed._
+_For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed._
 
