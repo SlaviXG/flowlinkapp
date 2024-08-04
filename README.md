@@ -19,7 +19,7 @@ Run the following command:
 ## Preparation
 1. In Google Cloud services set up a project.
 2. Enable Google Tasks API, Google Calendar API and Generative Language API for this project.
-3. Obtain Gemini Api Key.
+3. Obtain Gemini API Key.
 4. Set up OAuth 2.0 for the project. Obtain Client ID, Project ID and Client Secret.
 5. Set up OAuth consent screen (add test users or publish the app for production).
 
