@@ -55,4 +55,4 @@ Run the following command:
     flutter run -d windows
 ```
 
-For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed.
+_*For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed._
