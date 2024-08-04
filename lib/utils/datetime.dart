@@ -10,8 +10,10 @@ String getDeviceTimeZone({bool includeUTC = true}) {
 double calculateHoursSaved(Map <String, dynamic> response) {
   double hoursSaved = 0.0;
   if(response.containsKey('task')) {
+    // 15 seconds
     hoursSaved += 0.00416;
   } else if (response.containsKey('event')) {
+    // 30 seconds
     hoursSaved += 0.00833;
   }
   return hoursSaved;
