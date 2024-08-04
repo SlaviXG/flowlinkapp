@@ -9,10 +9,10 @@ import 'package:flowlinkapp/widgets/theme_data.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   bool _isAuthenticating = false;
 
@@ -64,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('Login with Google Account'),
+          title: const Text('Login with Google Account'),
         ),
         body: Center(
           child: Column(
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: AnimatedLogo(),
               ),
-              SizedBox(height: 100),
+              const SizedBox(height: 100),
               _isAuthenticating
                   ? const CircularProgressIndicator(
                       color: circularIndicatorColor,
@@ -90,8 +90,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               'assets/google_icon.png',
                               height: 24.0,
                             ),
-                            SizedBox(width: 10),
-                            Text('Login'),
+                            const SizedBox(width: 10),
+                            const Text('Login'),
                           ],
                         ),
                       ),

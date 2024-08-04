@@ -11,10 +11,10 @@ import 'package:flowlinkapp/widgets/theme_data.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   late final DataRetriever _dataRetriever;
   late final DataProcessor _dataProcessor;
   String _output = '';
@@ -117,8 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
@@ -133,25 +131,25 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('FlowLink'),
+          title: const Text('FlowLink'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Center(
                 child: AnimatedLogo(key: _animatedLogoKey),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               TimeSavedDisplay(hours: _timeSaved),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               ElevatedButton(
                 onPressed: _logout,
-                child: Text('Log out'),
+                child: const Text('Log out'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
             ],
           ),
         ),

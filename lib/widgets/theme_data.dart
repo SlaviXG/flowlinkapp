@@ -10,10 +10,10 @@ const Color circularIndicatorColor = Color.fromARGB(255, 226, 227, 247);
 ThemeData buildThemeData() {
   return ThemeData(
     useMaterial3: true,
-    scaffoldBackgroundColor: Colors.transparent, // Set to transparent to allow the gradient to show
+    scaffoldBackgroundColor: Colors.transparent,
 
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.transparent, // Set to transparent to allow gradient to show
+      backgroundColor: Colors.transparent,
       elevation: 0,
       titleTextStyle: TextStyle(
         color: titleTextColor,
