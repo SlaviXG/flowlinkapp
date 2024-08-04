@@ -1,4 +1,7 @@
-# FlowLink
+<h1>
+  <img src="assets/flowlink_logo.png" alt="FlowLink Logo" width="30" height="30">
+  FlowLink
+</h1>
 
 FlowLink is an application that harnesses the power of Gemini, Google Tasks, and Google Calendar APIs to enhance productivity and streamline busy lifestyles. Simply select the text, click your designated button (or use a hotkey, depending on your settings), and let the application manage the content, whether it's an event or a task you need to complete.
 
@@ -55,4 +58,8 @@ Run the following command:
     flutter run -d windows
 ```
 
+<<<<<<< HEAD
 _*For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed._
+=======
+For successful login the user should be either added to the list of test users, or the general group permission modifier should be changed.
+>>>>>>> 185a5fab039e931b4c41311f268d7a8e873da4df
