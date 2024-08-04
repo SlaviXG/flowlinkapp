@@ -20,7 +20,6 @@ class HomeScreenState extends State<HomeScreen> {
   late final DataProcessor _dataProcessor;
   String _output = '';
   String? _responseText;
-  bool _isLoading = false;
   final FlutterSecureStorage _storage = const FlutterSecureStorage();
   final GlobalKey<AnimatedLogoState> _animatedLogoKey = GlobalKey<AnimatedLogoState>();
   double _timeSaved = 0.0;
@@ -78,15 +77,13 @@ class HomeScreenState extends State<HomeScreen> {
         }
         await _dataProcessor.submit(response);
         setState(() {
-          _isLoading = false;
+          _animatedLogoKey.currentState?.accelerate(false);
           _timeSaved += calculateHoursSaved(response);
           _saveTimeSaved();
         });
-        _animatedLogoKey.currentState?.accelerate(false);
       } catch (e) {
         setState(() {
           _responseText = 'Error: $e';
-          _isLoading = false;
           print(_responseText);
         });
         _animatedLogoKey.currentState?.accelerate(false);

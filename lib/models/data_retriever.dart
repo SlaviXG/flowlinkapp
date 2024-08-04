@@ -47,7 +47,7 @@ class DataRetriever {
 
   static Future<void> simulateCtrlC() async {
     if (Platform.isWindows || Platform.isLinux) {
-      //FlutterAutoGUI.hotkey(keys: ['ctrl', 'c']);
+      // FlutterAutoGUI.hotkey(keys: ['ctrl', 'c']);
       FlutterAutoGUI.keyDown(key: 'ctrl');
       FlutterAutoGUI.keyDown(key: 'c');
       await Future.delayed(const Duration(milliseconds: 150));
