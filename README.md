@@ -8,13 +8,22 @@ FlowLink is an application that harnesses the power of Gemini, Google Tasks, and
 
 ## Requirements
 ### Windows
-### Linux
-- `keybinder-3.0`
+- Dart & Flutter
 
+### Linux & macOS
+The app was not tested for Linux and MacOS. But this package will be required.
+- `keybinder-3.0`
 Run the following command:
 ```shell sudo apt-get install keybinder-3.0```
 
-## Build & run
+## Preparation
+1. In Google Cloud services set up a project.
+2. Enable Google Tasks API, Google Calendar API and Generative Language API for this project.
+3. Obtain Gemini Api Key.
+4. Set up OAuth 2.0 for the project. Obtain Client ID, Project ID and Client Secret.
+5. Set up OAuth consent screen (add test users or publish the app for production).
+
+## Build & Run
 1. In the main directory, create `secrets.json` file.
 2. Pase the following content and provide your gemini api key, google cloud client id, project id and the secret.
 ```
@@ -41,6 +50,7 @@ Run the following command:
 ```
 
 3. Run
+
 ```bash
     flutter run -d windows
 ```
