@@ -111,7 +111,8 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _output += 'Failed to forget credentials: $e\n';
       });
-    }
+    } 
+    print(_output);
   }
 
   @override
