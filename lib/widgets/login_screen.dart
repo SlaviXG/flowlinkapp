@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Center(
                 child: AnimatedLogo(),
               ),
-              SizedBox(height: 120),
+              SizedBox(height: 100),
               _isAuthenticating
                   ? const CircularProgressIndicator(
                       color: circularIndicatorColor,

@@ -139,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 40),
+              SizedBox(height: 30),
               Center(
                 child: AnimatedLogo(key: _animatedLogoKey),
               ),
