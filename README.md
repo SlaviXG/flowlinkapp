@@ -1,4 +1,7 @@
-# FlowLink
+<h1>
+  <img src="assets/flowlink_logo.png" alt="FlowLink Logo" width="30" height="30">
+  FlowLink
+</h1>
 
 FlowLink is an application that harnesses the power of Gemini, Google Tasks, and Google Calendar APIs to enhance productivity and streamline busy lifestyles. Simply select the text, click your designated button (or use a hotkey, depending on your settings), and let the application manage the content, whether it's an event or a task you need to complete.
 
