@@ -8,6 +8,7 @@ import 'package:flowlinkapp/app_state.dart';
 import 'package:flowlinkapp/widgets/animated_logo.dart';
 import 'package:flowlinkapp/widgets/time_saved_display.dart';
 import 'package:flowlinkapp/widgets/theme_data.dart';
+import 'package:flowlinkapp/utils/datetime.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -59,7 +60,7 @@ class HomeScreenState extends State<HomeScreen> {
 
   Future<void> _processContent() async {
     ClipboardData? prevClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(const Duration(milliseconds: 200));
     await DataRetriever.simulateCtrlC();
     ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
 
@@ -71,21 +72,22 @@ class HomeScreenState extends State<HomeScreen> {
 
       try {
         final response = await _dataProcessor.extract(clipboardData.text.toString());
-        setState(() {
-          _responseText = response.toString();
-          _isLoading = false;
-          _timeSaved += 0.5;
-          _saveTimeSaved();
-        });
+        _responseText = response.toString();
         if (prevClipboardData != null) {
           await Clipboard.setData(prevClipboardData);
         }
         await _dataProcessor.submit(response);
+        setState(() {
+          _isLoading = false;
+          _timeSaved += calculateHoursSaved(response);
+          _saveTimeSaved();
+        });
         _animatedLogoKey.currentState?.accelerate(false);
       } catch (e) {
         setState(() {
           _responseText = 'Error: $e';
           _isLoading = false;
+          print(_responseText);
         });
         _animatedLogoKey.currentState?.accelerate(false);
       }

@@ -10,7 +10,7 @@ class TimeSavedDisplay extends StatelessWidget {
     return Column(
       children: [
         Text(
-          "${hours.toStringAsFixed(1)} hours",
+          "${hours.toStringAsFixed(1)} minutes",
           style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
