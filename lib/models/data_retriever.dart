@@ -50,13 +50,13 @@ class DataRetriever {
       // FlutterAutoGUI.hotkey(keys: ['ctrl', 'c']);
       FlutterAutoGUI.keyDown(key: 'ctrl');
       FlutterAutoGUI.keyDown(key: 'c');
-      await Future.delayed(const Duration(milliseconds: 150));
+      await Future.delayed(const Duration(milliseconds: 200));
       FlutterAutoGUI.keyUp(key: 'c');
       FlutterAutoGUI.keyUp(key: 'ctrl');
     } else if (Platform.isMacOS) {
       FlutterAutoGUI.keyDown(key: 'command');
       FlutterAutoGUI.keyDown(key: 'c');
-      await Future.delayed(const Duration(milliseconds: 150));
+      await Future.delayed(const Duration(milliseconds: 200));
       FlutterAutoGUI.keyUp(key: 'c');
       FlutterAutoGUI.keyUp(key: 'command');
     } else {

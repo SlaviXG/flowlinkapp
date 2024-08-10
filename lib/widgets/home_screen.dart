@@ -59,8 +59,8 @@ class HomeScreenState extends State<HomeScreen> {
 
   Future<void> _processContent() async {
     ClipboardData? prevClipboardData = await Clipboard.getData(Clipboard.kTextPlain);
-    await Future.delayed(const Duration(milliseconds: 300));
     await DataRetriever.simulateCtrlC();
+    await Future.delayed(const Duration(milliseconds: 320));
     ClipboardData? clipboardData = await Clipboard.getData(Clipboard.kTextPlain);
 
     if (clipboardData != null) {
@@ -81,6 +81,7 @@ class HomeScreenState extends State<HomeScreen> {
           _timeSaved += calculateHoursSaved(response);
           _saveTimeSaved();
         });
+        await Future.delayed(const Duration(milliseconds: 100));
       } catch (e) {
         setState(() {
           _responseText = 'Error: $e';
